@@ -1,0 +1,75 @@
+<!--/*
+ *1. 프로젝트명 : dwm
+ *2. 패키지명   : templates.project
+ *3. 작성일     : 2021. 01. 05. 오후 3:36
+ *4. 작성자     : 고병만
+ *5. 이메일     : scormrte@gmail.com
+*/-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{thymeleaf/layout/default}">
+<head>
+    <script type="text/javascript">
+        function fn_log(dpNo){
+            let url = "./log.html?dpNo=" + dpNo;
+            openPopup(url,1600,768,"log");
+        }
+    </script>
+</head>
+<th:block layout:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <h3>Deploy::List</h3>
+
+    <table class="table table-bordered table-info" >
+        <thead>
+            <tr>
+                <th class="text-center">no</th>
+                <th class="text-center">jobNo</th>
+                <th class="text-center">projectName</th>
+                <th class="text-center">CMD</th>
+                <th class="text-center">deploy</th>
+                <th class="text-center">success</th>
+                <th class="text-center">reginfo</th>
+                <th class="text-center">regdate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item,i : ${list}">
+                <td class="text-center" >
+                    <span th:text="${pageUtil.startRow-i.index}"/>
+                </td>
+                <td class="text-center text-danger fw-bold">
+                    <span th:text="${item.dpNo}"  />
+                </td>
+                <td class="text-center">
+                    <span th:text="${item.projectVO.prjName}"  />
+                </td>
+                <td>
+                    <span th:text="${item.projectVO.prjCmd}"  />
+                </td>
+                <td class="text-center">
+                    <span th:text="${item.dpStatus}" class="badge bg-info"  th:if="${item.dpStatus eq '대기'}" />
+                    <span th:text="${item.dpStatus}" class="badge bg-warning"  th:if="${item.dpStatus eq '진행'}" />
+                    <span th:text="${item.dpStatus}" class="badge bg-success"  th:if="${item.dpStatus eq '완료'}" />
+                </td>
+                <td class="text-center">
+                    <th:block th:if="${item.dpSflag != null}">
+                        <span th:if="${item.dpSflag eq 1 }" class="badge bg-success">성공</span>
+                        <span th:if="${item.dpSflag eq 0 }" class="badge bg-success">실패</span>
+                        <a href="#" class="badge bg-danger" th:attr="dpNo=${item.dpNo}" onclick="fn_log(this.getAttribute('dpNo'))" >Log</a>
+                    </th:block>
+                    <th:block th:if="${item.dpSflag eq null}">
+                        <span>-</span>
+                    </th:block>
+                </td>
+                <td class="text-center">
+                    <span th:text="${item.regMbId}" />(<span th:text="${item.regMbName}" />)
+                </td>
+                <td class="text-center">
+                    <span th:text="${item.regDatetime}" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination justify-content-center">
+        <th:block th:replace="@{common/pagination/default}" ></th:block>
+    </div>
+
+</th:block>

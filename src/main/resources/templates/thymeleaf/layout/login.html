@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <th:block th:replace="thymeleaf/flagments/cmm_resources ::  cmm_meta" ></th:block>
+        <th:block th:replace="thymeleaf/flagments/cmm_resources ::  cmm_css" ></th:block>
+    </head>
+    <body>
+        <th:block layout:fragment="content"></th:block>
+        <th:block th:replace="thymeleaf/flagments/cmm_resources ::  cmm_js" ></th:block>
+    </body>
+</html>

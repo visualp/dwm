@@ -1,0 +1,102 @@
+<!--/*
+ *1. 프로젝트명 : dwm
+ *2. 패키지명   : templates.project
+ *3. 작성일     : 2021. 01. 04. 오후 3:20
+ *4. 작성자     : 고병만
+ *5. 이메일     : scormrte@gmail.com
+*/-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{thymeleaf/layout/default}">
+<head>
+    <script type="text/javascript">
+        function fn_delete(){
+            var ans = confirm("Can yum delete now?")
+            if(ans){
+                $("#frm01").attr("action","./deleteOneAction.html")
+                $("#frm01").submit();
+            }
+        }
+
+        function fn_force_deploy(){
+            var ans = confirm("Can yum deploy now?")
+            if(ans){
+                $("#frm01").attr("action","./remote_deployAction.html")
+                $("#frm01").submit();
+            }
+        }
+    </script>
+</head>
+<th:block layout:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <h3>Project::Reg</h3>
+    <form th:object="${ProjectVO}" th:method="post" th:action="${ProjectVO.actionUrl}" id="frm01" >
+        <input type="hidden" th:field="*{prjNo}" />
+        <div class="col-5">
+            <table class="table table-bordered">
+            <tbody>
+
+                <tr>
+                    <th>project.name</th>
+                    <td>
+                        <input type="text" th:field="*{prjName}" class="form-control" required="required" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>remote.address</th>
+                    <td>
+                        <input type="text" th:field="*{prjRaddress}" class="form-control" required="required" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>remote.id</th>
+                    <td>
+                        <input type="text" th:field="*{prjRid}" class="form-control" required="required" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>remote.password</th>
+                    <td>
+                        <input type="text" th:field="*{prjRpassword}" class="form-control" required="required" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>flag(Y:use, N:none)</th>
+                    <td>
+                        <select th:field="*{prjFlag}" class="form-control">
+                            <option th:value="1">Y</option>
+                            <option th:value="0">N</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>cmd</th>
+                    <td>
+                        <input type="text" th:field="*{prjCmd}"  class="form-control" />
+                    </td>
+                </tr>
+
+                <tr th:if="${ProjectVO.prjNo != null }" >
+                    <th>webhook</th>
+                    <td>
+                        <span th:text="${ProjectVO.whookAddress}" />
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <a th:href="@{'./list.html' + ${#u.query()}}" class="btn btn-success">
+                            List
+                        </a>
+                        <button type="button" class="btn btn-warning" onclick="fn_force_deploy()">Force-deploy</button>
+                        <button type="button" class="btn btn-danger float-start" onclick="fn_delete()">Delete</button>
+                        <button type="submit" class="btn btn-info float-end"  >Submit</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+    </form>
+</th:block>

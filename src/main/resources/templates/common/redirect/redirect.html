@@ -1,0 +1,113 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{thymeleaf/layout/blank}">
+<head>
+    <script type="text/javascript">
+        var _is_opener = false;
+        window.onload = function () {
+
+            let message = document.getElementById("message").value;
+            let url = document.getElementById("url").value;
+            let murl = document.getElementById("murl").value;
+            let mode = document.getElementById("mode").value;
+
+            if (message != "") {
+                alert(message);
+            }
+
+            if (url != "" && murl == "") {
+                if (mode == "predirect") {
+                    try {
+                        window.opener.location.href = url;
+                    } catch (e) {
+                        _is_opener=true;
+                        location.href = url;
+                    }
+                } else {
+                    location.href = url;
+                }
+            }
+
+            if (url != "" && murl != "") {
+                if (mode == "predirect") {
+                    try {
+                        window.opener.location.href = url + "&murl=" + murl;
+                    } catch (e) {
+                        _is_opener=true;
+                        location.href = url + "&murl=" + murl;
+                    }
+                } else {
+                    location.href = url + "&murl=" + murl;
+                }
+            }
+
+            if (mode == "predirect") {
+                if(!_is_opener){
+                    window.close();
+                }
+            }
+
+
+            /*
+            try {
+                window.opener.location.href = url;
+            }catch(e){
+              //  alert(e);
+                location.href=url;
+
+            }
+            */
+            /*
+            let millisecondsToWait = 100;
+            setTimeout(function() {
+                if(message != ""){
+                    alert(message);
+                }
+
+                if(url != "" && murl=="" ){
+                    if(mode == "predirect"){
+                        //부모창이 존재 하면
+                        if(typeof(opener) != "undefined") {
+                            opener.location.href = url;
+                        }else{
+                            location.href=url;
+                        }
+                    }else {
+                        location.href = url;
+                    }
+                }
+
+                if(url !="" && murl !=""){
+                    if(mode == "predirect"){
+                        if(typeof(opener) != "undefined") {
+                            opener.location.href = url + "&murl=" + murl;
+                        }else{
+                            location.href=url + "&murl=" + murl;
+                        }
+                    }else{
+                        location.href=url + "&murl=" + murl;
+                    }
+                }
+
+                if(mode=="predirect"){
+                    //부모창이 존재 할 경우 현재창 닫기
+                    if(typeof(opener) != "undefined") {
+                        window.close();
+                    }
+                }
+
+            }, millisecondsToWait);
+             */
+
+        }//end unload function
+    </script>
+</head>
+
+</th:block>
+
+<th:block layout:fragment="content" xmlns:th="http://www.thymeleaf.org" >
+    <input type="hidden" name="message" id="message" th:value="${message}" />
+    <input type="hidden" name="url" id="url" th:value="${url}" />
+    <input type="hidden" name="murl" id="murl" th:value="${murl}" />
+    <input type="hidden" name="mode" id="mode" th:value="${mode}" />
+</th:block>
+
+</html>

@@ -1,0 +1,41 @@
+<!--/*
+ *1. 프로젝트명 : dwm
+ *2. 패키지명   : templates.dockerhub.log
+ *3. 작성일     : 2021. 01. 07. 오전 10:44
+ *4. 작성자     : 고병만
+ *5. 이메일     : scormrte@gmail.com
+*/-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{thymeleaf/layout/default}">
+<head>
+
+</head>
+<th:block layout:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <h3>Webhooks::List</h3>
+
+    <table class="table table-bordered table-info" >
+        <thead>
+        <tr>
+            <th class="text-center">no</th>
+            <th class="text-center">projectName</th>
+            <th class="text-center">regdate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item,i : ${list}">
+            <td class="text-center" >
+                <span th:text="${pageUtil.startRow-i.index}"/>
+            </td>
+            <td class="text-center">
+                <span th:text="${item.projectVO.prjName}"  />
+            </td>
+            <td class="text-center">
+                <span th:text="${item.regDatetime}" />
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination justify-content-center">
+        <th:block th:replace="@{common/pagination/default}" ></th:block>
+    </div>
+
+</th:block>

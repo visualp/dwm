@@ -1,0 +1,26 @@
+<!--/*
+ *1. 프로젝트명 : dwm
+ *2. 패키지명   : templates.deploy
+ *3. 작성일     : 2021. 01. 06. 오전 11:41
+ *4. 작성자     : 고병만
+ *5. 이메일     : scormrte@gmail.com
+*/-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{thymeleaf/layout/blank}">
+<th:block xmlns:th="http://www.thymeleaf.org" layout:fragment="custom_css">
+</th:block>
+<th:block xmlns:th="http://www.thymeleaf.org" layout:fragment="custom_js">
+</th:block>
+<th:block layout:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <div class="card">
+        <div class="card-header">
+
+            <th:block th:if="${deployVO.dpSflag != null}">
+                <span th:if="${deployVO.dpSflag eq 1 }" class="badge bg-success">deploy:성공</span>
+                <span th:if="${deployVO.dpSflag eq 0 }" class="badge bg-success">deploy:실패</span>
+            </th:block>
+        </div>
+        <div class="card-body">
+            <p th:utext="${#u.nl2br(deployVO.dpLog)}"></p>
+        </div>
+    </div>
+</th:block>

@@ -1,0 +1,60 @@
+<!--/*
+ *1. 프로젝트명 : dwm
+ *2. 패키지명   : templates.project
+ *3. 작성일     : 2021. 01. 04. 오후 3:20
+ *4. 작성자     : 고병만
+ *5. 이메일     : scormrte@gmail.com
+*/-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{thymeleaf/layout/default}">
+<head>
+
+</head>
+<th:block layout:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <h3>Project::List</h3>
+    <p>
+        <a href="./insert.html" class="btn btn-info" >등록</a>
+    </p>
+    <table class="table table-bordered table-info" >
+        <thead>
+            <tr>
+                <th class="text-center">no</th>
+                <th class="text-center">projectName</th>
+                <th class="text-center">remoteAddress</th>
+                <th class="text-center">webhook</th>
+                <th class="text-center">flag</th>
+                <th class="text-center">reginfo</th>
+                <th class="text-center">regdate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item,i : ${list}">
+                <td class="text-center" >
+                    <span th:text="${pageUtil.startRow-i.index}"/>
+                </td>
+                <td class="text-center">
+                    <a th:href="@{./update.html(prjNo=${item.prjNo})}"><span th:text="${item.prjName}" /></a>
+                </td>
+                <td class="text-center">
+                    <span th:text="${item.prjRaddress}"></span>
+                </td>
+                <td>
+                    <span th:text="${item.whookAddress}" />
+                </td>
+                <td class="text-center">
+                    <span th:if="${item.prjFlag eq 1}" class="badge bg-success">Y</span>
+                    <span th:if="${item.prjFlag eq 0}" class="badge bg-danger">N</span>
+                </td>
+                <td class="text-center">
+                    <span th:text="${item.regMbId}" />(<span th:text="${item.regMbName}" />)
+                </td>
+                <td class="text-center">
+                    <span th:text="${item.regDatetime}" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination justify-content-center">
+        <th:block th:replace="@{common/pagination/default}" ></th:block>
+    </div>
+
+</th:block>
